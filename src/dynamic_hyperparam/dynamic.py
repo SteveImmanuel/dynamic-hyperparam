@@ -1,5 +1,5 @@
 import multiprocessing
-from typing import Dict
+from typing import Any, Dict
 
 class DynamicHyperparameters:
     def __init__(self, **kwargs):
@@ -32,6 +32,7 @@ class DynamicHyperparameters:
         elif hasattr(self, 'attributes') and key in self.attributes:
             if self.modifiable:
                 with self.lock:
+                    # TODO: handle non-primitive value type
                     self.attributes[key] = value
             else:
                 print('Cannot modify the value outside the context manager')
@@ -42,3 +43,13 @@ class DynamicHyperparameters:
     @staticmethod
     def from_dict(d: Dict):
         return DynamicHyperparameters(**d)
+
+class DynamicRange:
+    def __init__(self, config: DynamicHyperparameters):
+        self.config = config
+
+    def __call__(self, key: str, start:int = 0, step:int = 1) -> Any:
+        i = start
+        while i < getattr(self.config, key):
+            yield i
+            i += step
