@@ -1,5 +1,4 @@
-from .dynamic_hyperparameters import DynamicHyperparameters
-
+from .dynamic import DynamicHyperparameters
 class AllowModify:
     def __init__(self, o: DynamicHyperparameters):
         self.o = o

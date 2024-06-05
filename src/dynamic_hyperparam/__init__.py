@@ -1,2 +1,2 @@
-from .dynamic_hyperparameters import DynamicHyperparameters
+from .dynamic import DynamicHyperparameters, DynamicRange
 from .context_manager import AllowModify
